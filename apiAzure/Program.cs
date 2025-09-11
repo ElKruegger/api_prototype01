@@ -35,3 +35,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+
+/// Commit aleatorio pra ver o CI/CD do github actions em ação, sou foda
