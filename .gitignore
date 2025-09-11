@@ -1,0 +1,12 @@
+# Pastas temporárias
+.vs/
+bin/
+obj/
+
+# Arquivos de usuário
+*.user
+*.suo
+*.vsidx
+
+# Outros
+*.log
