@@ -10,6 +10,7 @@
     <!-- ASP.NET Core minimal APIs & controllers are in the shared framework -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <!-- Optional: design-time tools for migrations (not required at runtime) -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
