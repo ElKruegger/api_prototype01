@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,7 +49,22 @@ app.MapHealthChecks("/health/live", new HealthCheckOptions
 
 app.MapHealthChecks("/health/ready", new HealthCheckOptions
 {
-    Predicate = _ => true
+    Predicate = _ => true,
+    ResponseWriter = async (ctx, report) =>
+    {
+        ctx.Response.ContentType = "application/json";
+        var payload = new
+        {
+            status = report.Status.ToString(),
+            checks = report.Entries.Select(e => new {
+                name = e.Key,
+                status = e.Value.Status.ToString(),
+                error = e.Value.Exception?.Message,
+                duration = e.Value.Duration.ToString()
+            })
+        };
+        await ctx.Response.WriteAsync(JsonSerializer.Serialize(payload));
+    }
 });
 
 app.Run();
