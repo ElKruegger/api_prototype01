@@ -16,7 +16,7 @@ builder.Services.AddScoped<apiAzure.Services.IPersonService, apiAzure.Services.P
 
 // EF Core DbContext
 builder.Services.AddDbContext<apiAzure.Data.ApiDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Health Checks
 
@@ -24,7 +24,7 @@ builder.Services
     .AddHealthChecks()
     // ping direto ao PostgreSQL (SELECT 1)
     .AddNpgSql(
-        connectionString: builder.Configuration.GetConnectionString("Postgres"),
+        connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
         name: "postgres-raw",
         timeout: TimeSpan.FromSeconds(5))
     // mantém o check do DbContext (opcional, mas útil)

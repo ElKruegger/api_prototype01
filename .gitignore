@@ -10,3 +10,7 @@ obj/
 
 # Outros
 *.log
+
+# Configs sensíveis
+apiAzure/appsettings.json
+apiAzure/appsettings.*.json
