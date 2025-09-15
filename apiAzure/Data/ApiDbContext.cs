@@ -21,7 +21,7 @@ namespace apiAzure.Data
                 entity.Property(p => p.Email).HasColumnName("email").HasMaxLength(100).IsRequired();
                 entity.Property(p => p.Gender).HasColumnName("gender").HasMaxLength(50);
                 entity.Property(p => p.IpAddress).HasColumnName("ip_address").HasMaxLength(50);
-                entity.Property(p => p.HouseAddress).HasColumnName("house_adress").HasMaxLength(100);
+                entity.Property(p => p.HouseAddress).HasColumnName("house_address").HasMaxLength(100);
             });
         }
     }

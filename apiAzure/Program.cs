@@ -19,21 +19,24 @@ builder.Services.AddDbContext<apiAzure.Data.ApiDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
 
 // Health Checks
-builder.Services
-    .AddHealthChecks()  
-    .AddDbContextCheck<apiAzure.Data.ApiDbContext>(name: "postgres-db");
 
+builder.Services
+    .AddHealthChecks()
+    // ping direto ao PostgreSQL (SELECT 1)
+    .AddNpgSql(
+        connectionString: builder.Configuration.GetConnectionString("Postgres"),
+        name: "postgres-raw",
+        timeout: TimeSpan.FromSeconds(5))
+    // mantém o check do DbContext (opcional, mas útil)
+    .AddDbContextCheck<apiAzure.Data.ApiDbContext>(name: "postgres-db");
 // Repository via EF
 builder.Services.AddScoped<apiAzure.Repositories.IPersonRepository, apiAzure.Repositories.EfPersonRepository>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
@@ -66,6 +69,7 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions
         await ctx.Response.WriteAsync(JsonSerializer.Serialize(payload));
     }
 });
+
 
 app.Run();
 
